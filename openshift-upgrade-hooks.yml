@@ -4,19 +4,22 @@
   gather_facts: true
   vars_files:
     - vars/openshift-vars.yml
-  
+  tags: [always]
+ 
   vars:
     openshift_cluster_url: "{{ cluster_api_url | default(lookup('env', 'K8S_AUTH_HOST')) | default('https://api.your-cluster.example.com:6443') }}"
     openshift_token: "{{ cluster_token | default(lookup('env', 'K8S_AUTH_API_KEY')) | default(vault_openshift_token | default('YOUR_OPENSHIFT_TOKEN_HERE')) }}"
     upgrade_mode: "{{ mode | default('both') }}"  # pre, post, or both
     log_file: "{{ playbook_dir }}/logs/upgrade-checks-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}{{ ansible_date_time.minute }}.log"
-    
+    tags: [always]
+
   tasks:
     - name: Create logs directory
       file:
         path: "{{ playbook_dir }}/logs"
         state: directory
         mode: '0755'
+      tags: [always]
       
     - name: Initialize log file
       copy:
@@ -27,7 +30,9 @@
           Mode: {{ upgrade_mode }}
           =====================================
         dest: "{{ log_file }}"
+      tags: [always]
       
+
     - name: Validate required variables
       assert:
         that:
@@ -37,7 +42,8 @@
           - openshift_token | length > 0
         fail_msg: "OpenShift cluster URL and token must be defined"
         success_msg: "Required variables validated"
-    
+      tags: [always]
+
     - name: Test OpenShift cluster connectivity
       uri:
         url: "{{ openshift_cluster_url }}/healthz"
@@ -49,15 +55,17 @@
         timeout: 30
       register: cluster_health_check
       failed_when: false
-      
+      tags: [always]
+
     - name: Fail if cluster is not accessible
       fail:
         msg: "Cannot connect to OpenShift cluster at {{ openshift_cluster_url }}"
       when: cluster_health_check.status != 200
+      tags: [always]
 
     # Pre-upgrade checks
     - name: Execute pre-upgrade checks
-      include_tasks: tasks/pre-upgrade-checks.yml
+      import_tasks: tasks/pre-upgrade-checks.yml
       when: upgrade_mode in ['pre', 'both']
       tags:
         - pre-upgrade
@@ -65,7 +73,7 @@
 
     # Post-upgrade checks  
     - name: Execute post-upgrade checks
-      include_tasks: tasks/post-upgrade-checks.yml
+      import_tasks: tasks/post-upgrade-checks.yml
       when: upgrade_mode in ['post', 'both']
       tags:
         - post-upgrade

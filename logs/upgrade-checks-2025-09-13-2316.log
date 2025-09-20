@@ -1,0 +1,10 @@
+OpenShift Cluster Upgrade Checks
+Date: 2025-09-13T17:46:27Z
+Cluster: https://api.ck8786bi.eastus.aroapp.io:6443
+Mode: pre
+=====================================
+23:16:27 - Starting pre-upgrade checks
+23:16:27 - Current version: 4.15.49, Channel: unknown
+23:16:27 - Nodes: 6/6 ready (3 masters, 3 workers)
+23:16:27 - Pre-upgrade checks: PASS
+23:16:27 - WARNING: Node metrics unavailable - manual resource check recommended

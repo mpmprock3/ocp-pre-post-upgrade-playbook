@@ -1,0 +1,10 @@
+OpenShift Cluster Upgrade Checks
+Date: 2025-09-13T17:55:11Z
+Cluster: https://api.ck8786bi.eastus.aroapp.io:6443
+Mode: post
+=====================================
+23:25:11 - Starting post-upgrade checks
+23:25:11 - Version upgrade: unknown -> unknown
+23:25:11 - Post-upgrade checks: FAIL
+23:25:11 - FAILURE: API server not ready after upgrade
+23:25:11 - WARNING: DNS services may be impacted after upgrade

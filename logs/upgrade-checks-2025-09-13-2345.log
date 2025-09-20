@@ -1,0 +1,7 @@
+OpenShift Cluster Upgrade Checks
+Date: 2025-09-13T18:15:10Z
+Cluster: https://api.ck8786bi.eastus.aroapp.io:6443
+Mode: post
+=====================================
+23:45:10 - Starting post-upgrade checks
+23:45:10 - Version upgrade: unknown -> 4.15.49

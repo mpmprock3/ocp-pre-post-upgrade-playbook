@@ -99,10 +99,10 @@
 # Cluster Operators Health Check
 - name: Get cluster operators status
   uri:
-    url: "{{cluster_api_url|default(lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/apis/config.openshift.io/v1/clusteroperators"
+    url: "{{ cluster_api_url|default(lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/apis/config.openshift.io/v1/clusteroperators"
     method: GET
     headers:
-      Authorization: "Bearer {{ cluster_token|default (lookup('env', 'K8S_AUTH_API_KEY')) | default(openshift_token) }}"
+      Authorization: "Bearer {{ cluster_token|default(lookup('env', 'K8S_AUTH_API_KEY')) | default(openshift_token) }}"
     validate_certs: "{{ validate_ssl_certs | default(true) }}"
     return_content: yes
   register: cluster_operators
@@ -168,7 +168,7 @@
 # etcd Health Check
 - name: Check etcd cluster health
   uri:
-    url: "{{cluster_api_url|default( lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/api/v1/namespaces/openshift-etcd/pods"
+    url: "{{ cluster_api_url|default( lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/api/v1/namespaces/openshift-etcd/pods"
     method: GET
     headers:
       Authorization: "Bearer {{ cluster_token|default(lookup('env', 'K8S_AUTH_API_KEY')) | default(openshift_token) }}"
@@ -236,10 +236,10 @@
 # Storage Health Check
 - name: Get persistent volumes status
   uri:
-    url: "{{cluster_api_url|default(lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/api/v1/persistentvolumes"
+    url: "{{ cluster_api_url|default(lookup('env', 'K8S_AUTH_HOST')) | default(openshift_cluster_url) }}/api/v1/persistentvolumes"
     method: GET
     headers:
-      Authorization: "Bearer {{cluster_token|default(lookup('env', 'K8S_AUTH_API_KEY')) | default(openshift_token) }}"
+      Authorization: "Bearer {{ cluster_token|default(lookup('env', 'K8S_AUTH_API_KEY')) | default(openshift_token) }}"
     validate_certs: "{{ validate_ssl_certs | default(true) }}"
     return_content: yes
   register: persistent_volumes
