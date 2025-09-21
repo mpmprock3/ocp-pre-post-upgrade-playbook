@@ -263,9 +263,10 @@
             <div class="summary-grid">
                 <div class="summary-card">
                     <h3>Version Change</h3>
-                    <div class="value">{{ '✓' if post_check_results.version_changed else '✗' }}</div>
-                    <div>{{ post_check_results.old_version }} → {{ post_check_results.new_version }}</div>
-                </div>
+                    <div class="value">{{ '✓' if post_check_results.version_changed | default(false) else '✗' }}</div>
+                 <div>
+  {{ post_check_results.old_version | default('Unknown') }} → {{ post_check_results.new_version | default('Unknown') }}
+</div>
                 <div class="summary-card">
                     <h3>Node Health</h3>
                     <div class="value">{{ post_check_results.ready_nodes }}/{{ post_check_results.total_nodes }}</div>
@@ -273,8 +274,8 @@
                 </div>
                 <div class="summary-card">
                     <h3>Upgrade Status</h3>
-                    <div class="value">{{ '✓' if post_check_results.upgrade_completed else '✗' }}</div>
-                    <div>{{ 'Completed' if post_check_results.upgrade_completed else 'In Progress' }}</div>
+                    <div class="value">{{ '✓' if post_check_results.upgrade_completed|default(false) else '✗' }}</div>
+                    <div>{{ 'Completed' if post_check_results.upgrade_completed| default(false) else 'In Progress' }}</div>
                 </div>
             </div>
 
